@@ -1,8 +1,9 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useTexture } from '@react-three/drei';
-import { SRGBColorSpace } from 'three';
+import { Group, SRGBColorSpace, SpotLight } from 'three';
 import type { Artwork } from '../types/artwork';
 import { ART_HEIGHT, type ArtworkPlacement } from './layout';
+import { getSoftSpotCookie } from './textures';
 
 interface ArtworkFrame3DProps {
   artwork: Artwork;
@@ -10,15 +11,17 @@ interface ArtworkFrame3DProps {
 }
 
 /**
- * A single framed artwork mounted on a side wall, lit by its own soft ceiling
- * spotlight. The plane faces into the corridor.
+ * A single framed artwork mounted on a side wall, washed by its own soft ceiling
+ * spotlight (with a gobo so the light pools gently on the concrete). The plane
+ * faces into the corridor.
  */
 export function ArtworkFrame3D({ artwork, placement }: ArtworkFrame3DProps) {
   const texture = useTexture(artwork.image);
   texture.colorSpace = SRGBColorSpace;
   texture.anisotropy = 8;
 
-  // Derive aspect ratio from the loaded image (falls back to a portrait ratio).
+  const cookie = useMemo(() => getSoftSpotCookie(), []);
+
   const aspect = useMemo(() => {
     const img = texture.image as HTMLImageElement | undefined;
     if (img && img.width && img.height) return img.width / img.height;
@@ -31,33 +34,44 @@ export function ArtworkFrame3D({ artwork, placement }: ArtworkFrame3DProps) {
   // Left wall faces +X, right wall faces -X.
   const rotationY = placement.side === -1 ? Math.PI / 2 : -Math.PI / 2;
 
+  // Aim the spotlight at the artwork.
+  const spotRef = useRef<SpotLight>(null);
+  const targetRef = useRef<Group>(null);
+  useEffect(() => {
+    if (spotRef.current && targetRef.current) {
+      spotRef.current.target = targetRef.current;
+      spotRef.current.target.updateMatrixWorld();
+    }
+  }, []);
+
   return (
-    <group
-      position={[placement.x, placement.y, placement.z]}
-      rotation={[0, rotationY, 0]}
-    >
+    <group position={[placement.x, placement.y, placement.z]} rotation={[0, rotationY, 0]}>
       {/* White frame / mat, just proud of the wall */}
-      <mesh position={[0, 0, 0.03]} castShadow receiveShadow>
-        <boxGeometry args={[width + 0.16, height + 0.16, 0.06]} />
-        <meshStandardMaterial color="#fbfaf8" roughness={0.7} />
+      <mesh position={[0, 0, 0.04]} castShadow receiveShadow>
+        <boxGeometry args={[width + 0.14, height + 0.14, 0.07]} />
+        <meshStandardMaterial color="#f7f5f1" roughness={0.6} metalness={0} />
       </mesh>
 
       {/* The artwork surface */}
-      <mesh position={[0, 0, 0.07]}>
+      <mesh position={[0, 0, 0.085]}>
         <planeGeometry args={[width, height]} />
-        <meshStandardMaterial map={texture} roughness={0.9} />
+        <meshStandardMaterial map={texture} roughness={0.85} metalness={0} />
       </mesh>
 
-      {/* Gallery spotlight grazing the piece from above-front */}
+      {/* Soft gallery wall-wash from a ceiling track */}
       <spotLight
-        position={[0, 2.0, 1.6]}
-        target-position={[0, 0, 0]}
-        angle={0.6}
+        ref={spotRef}
+        position={[0, height * 0.7 + 0.6, 1.7]}
+        angle={0.55}
         penumbra={1}
-        intensity={6}
-        distance={9}
-        color="#fff7ec"
+        intensity={11}
+        distance={10}
+        decay={1.4}
+        color="#fff4e6"
+        map={cookie}
+        castShadow={false}
       />
+      <group ref={targetRef} position={[0, 0, 0.1]} />
     </group>
   );
 }
