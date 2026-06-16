@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000">
+  <rect width="1000" height="1000" fill="#eeebe6" />
+  <rect width="1000" height="1000" fill="#edeae3"/>
+  <rect x="360" y="120" width="120" height="760" fill="#dcd6ca"/>
+  <rect x="560" y="220" width="90" height="560" fill="#cfc8ba"/>
+  <line x1="360" y1="120" x2="360" y2="880" stroke="#b3ab9c" stroke-width="1"/>
+  <line x1="650" y1="220" x2="650" y2="780" stroke="#b3ab9c" stroke-width="1"/>
+  <text x="500" y="950" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="30" fill="#9a9384">Between Walls</text>
+</svg>

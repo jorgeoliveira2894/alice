@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1150" viewBox="0 0 900 1150">
+  <rect width="900" height="1150" fill="#f1efe9"/>
+  <path d="M250 250 C 520 420, 520 620, 300 850" fill="none" stroke="#b8b1a3" stroke-width="2"/>
+  <path d="M650 280 C 400 460, 400 640, 600 860" fill="none" stroke="#cbc4b6" stroke-width="2"/>
+  <circle cx="300" cy="850" r="6" fill="#8f887a"/>
+  <circle cx="600" cy="860" r="6" fill="#8f887a"/>
+  <text x="450" y="1095" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="30" fill="#9a948a">Soft Tension</text>
+</svg>

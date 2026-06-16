@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="0 0 900 1200">
+  <rect width="900" height="1200" fill="#f3f1ec"/>
+  <circle cx="450" cy="560" r="250" fill="#e2ddd4"/>
+  <circle cx="450" cy="560" r="250" fill="none" stroke="#b9b2a6" stroke-width="1.5"/>
+  <rect x="300" y="780" width="300" height="2" fill="#c9c2b6"/>
+  <text x="450" y="1140" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="30" fill="#9a948a">Silent Form</text>
+</svg>
