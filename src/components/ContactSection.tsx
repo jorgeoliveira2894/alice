@@ -36,10 +36,10 @@ export function ContactSection({ reducedMotion }: ContactSectionProps) {
           or available works
         </h2>
 
-        <div className="mt-12 flex flex-col items-center gap-3 text-sm text-ink/70">
+        <div className="mt-12 flex flex-col items-center gap-1 text-sm text-ink/70">
           <a
             href={`mailto:${STUDIO_EMAIL}`}
-            className="transition-colors duration-500 ease-premium hover:text-ink"
+            className="inline-flex min-h-[44px] items-center px-2 transition-colors duration-500 ease-premium hover:text-ink"
           >
             {STUDIO_EMAIL}
           </a>
@@ -47,7 +47,7 @@ export function ContactSection({ reducedMotion }: ContactSectionProps) {
             href={STUDIO_INSTAGRAM}
             target="_blank"
             rel="noreferrer"
-            className="transition-colors duration-500 ease-premium hover:text-ink"
+            className="inline-flex min-h-[44px] items-center px-2 transition-colors duration-500 ease-premium hover:text-ink"
           >
             Instagram
           </a>

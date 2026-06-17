@@ -44,15 +44,15 @@ export function ArtworkInfo({
         }`}
       >
         <div className="flex gap-3" style={{ justifyContent: align === 'right' ? 'flex-end' : 'flex-start' }}>
-          <dt className="uppercase tracking-wide text-muted/70">Technique</dt>
+          <dt className="uppercase tracking-wide text-muted">Technique</dt>
           <dd className="text-ink/70">{artwork.technique}</dd>
         </div>
         <div className="flex gap-3" style={{ justifyContent: align === 'right' ? 'flex-end' : 'flex-start' }}>
-          <dt className="uppercase tracking-wide text-muted/70">Dimensions</dt>
+          <dt className="uppercase tracking-wide text-muted">Dimensions</dt>
           <dd className="text-ink/70">{artwork.dimensions}</dd>
         </div>
         <div className="flex gap-3" style={{ justifyContent: align === 'right' ? 'flex-end' : 'flex-start' }}>
-          <dt className="uppercase tracking-wide text-muted/70">
+          <dt className="uppercase tracking-wide text-muted">
             {artwork.available ? 'Price' : 'Status'}
           </dt>
           <dd className="text-ink/70">

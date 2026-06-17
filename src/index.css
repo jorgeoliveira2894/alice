@@ -18,6 +18,15 @@
   ::selection {
     background: rgba(26, 26, 26, 0.08);
   }
+
+  /* Visible keyboard focus for every interactive element (a11y, HIGH).
+     Uses :focus-visible so it only shows for keyboard, not mouse clicks. */
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid rgba(26, 26, 26, 0.55);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
 }
 
 @layer utilities {

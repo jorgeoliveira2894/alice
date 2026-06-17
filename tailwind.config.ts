@@ -10,7 +10,7 @@ export default {
         paper: '#fbfaf8',
         wall: '#efedea',
         ink: '#1a1a1a', // soft black
-        muted: '#8a8782',
+        muted: '#6f6b64', // ~4.95:1 on canvas — meets WCAG AA for small text
         line: '#e2e0db',
       },
       fontFamily: {

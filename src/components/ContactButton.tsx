@@ -16,7 +16,7 @@ export function ContactButton({
   className = '',
 }: ContactButtonProps) {
   const base =
-    'group inline-flex items-center gap-2 text-xs font-sans uppercase tracking-editorial transition-colors duration-500 ease-premium';
+    'group inline-flex min-h-[44px] cursor-pointer items-center gap-2 text-xs font-sans uppercase tracking-editorial transition-colors duration-500 ease-premium';
 
   const styles =
     variant === 'outline'
