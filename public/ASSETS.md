@@ -1,21 +1,17 @@
-# Third-party assets
+# Assets
 
-All bundled 3D assets are **CC0 (public domain)** — free for commercial use, no
-attribution required. Credited here as a courtesy.
+The experience is photographic. Drop your own images here:
 
-| Asset | File | Source | License |
-|-------|------|--------|---------|
-| Lime-plaster PBR (walls/ceiling) | `textures/plaster/*.jpg` | ambientCG — *Plaster003* | CC0 |
-| Travertine PBR (floor) | `textures/travertine/*.jpg` | ambientCG — *Travertine006* | CC0 |
-| Warm studio HDRI (image-based lighting) | `hdri/studio_warm_1k.hdr` | Poly Haven — *brown_photostudio_02* | CC0 |
+| File | Used for |
+|------|----------|
+| `intro/01.jpg` | Opening — exterior facade, closed doors (with the studio name) |
+| `intro/02.jpg` | Transition — facade with open doors, corridor visible |
+| `intro/03.jpg` | Interior — facing an artwork on a white wall |
+| `artworks/*.svg` (or jpg/webp) | The artworks themselves (see `src/data/artworks.ts`) |
 
-To swap a material: replace the JPGs in the relevant `textures/<name>/` folder
-(keep the filenames). To change the lighting mood: replace the `.hdr` and update
-the path in `src/three/GalleryCanvas.tsx`.
+⚠️ Only use photography you own or have a licence for.
 
-## Intro photography (not yet bundled)
+Recommended for the intro photos: ~2000px wide, landscape, optimized JPG/WebP
+(<400 KB each). While missing, a warm gradient stands in so nothing looks broken.
 
-The opening sequence is designed to use two photographs (exterior facade →
-corridor through the doorway). Drop them in `intro/` as `01.jpg` and `02.jpg`.
-⚠️ Only use photos you own or have a licence for — the reference images shared in
-chat appear to be professional architecture photography and are **not** CC0.
+The intro image paths live in `src/components/PhotoLayer.tsx` (`SCENES`).
