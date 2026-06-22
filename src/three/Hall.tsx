@@ -20,33 +20,41 @@ interface HallProps {
 }
 
 const ROOM_WIDTH = ROOM_HALF_WIDTH * 2;
-const TILE_M = 2.4; // one concrete texture tile ≈ 2.4 m
+const WALL_TILE_M = 2.6; // plaster tile size
+const FLOOR_TILE_M = 1.25; // travertine tile size
 
-// CC0 PBR concrete (ambientCG · Concrete034)
-const CONCRETE_MAPS = {
-  map: '/textures/concrete/color.jpg',
-  normalMap: '/textures/concrete/normal.jpg',
-  roughnessMap: '/textures/concrete/roughness.jpg',
+// CC0 PBR (ambientCG): warm lime plaster walls + travertine floor
+const PLASTER_MAPS = {
+  map: '/textures/plaster/color.jpg',
+  normalMap: '/textures/plaster/normal.jpg',
+  roughnessMap: '/textures/plaster/roughness.jpg',
+};
+const TRAVERTINE_MAPS = {
+  map: '/textures/travertine/color.jpg',
+  normalMap: '/textures/travertine/normal.jpg',
+  roughnessMap: '/textures/travertine/roughness.jpg',
 };
 
-// Warm tints so the grey scan reads like the burnt-white reference concrete.
-const WALL_TINT = '#ddd6c8';
-const FLOOR_TINT = '#cfc8ba';
-const CEIL_TINT = '#d6cfc1';
+// Warm Mediterranean white / cream tints (from the references)
+const WALL_TINT = '#efe8da';
+const CEIL_TINT = '#ece5d6';
+const FLOOR_TINT = '#eadfc9';
 
-interface ConcreteMaps {
+interface PBRMaps {
   map: Texture;
   normalMap: Texture;
   roughnessMap: Texture;
 }
 
 /**
- * The architecture: a tall concrete corridor, entered through a doorway and
- * closed by a far wall. Surfaces use real CC0 PBR concrete (colour + normal +
- * roughness) lit by an HDRI environment, for a photographic result.
+ * The architecture: a tall warm-white plaster corridor with a polished
+ * travertine floor, entered through a doorway and closed by a far wall. Lit by
+ * a warm HDRI plus a soft key light, for a Mediterranean-minimal, photographic
+ * result.
  */
 export function Hall({ total }: HallProps) {
-  const maps = useTexture(CONCRETE_MAPS) as ConcreteMaps;
+  const plaster = useTexture(PLASTER_MAPS) as PBRMaps;
+  const travertine = useTexture(TRAVERTINE_MAPS) as PBRMaps;
 
   const back = hallBackZ(total);
   const frontZone = CAMERA_START_Z + 6;
@@ -57,12 +65,12 @@ export function Hall({ total }: HallProps) {
 
   return (
     <group>
-      {/* ---- Lighting: HDRI handles ambient/reflections; key light adds shadows ---- */}
-      <ambientLight intensity={0.12} color="#fbf4e6" />
+      {/* ---- Lighting: warm HDRI handles ambient/reflections; key adds shadows ---- */}
+      <ambientLight intensity={0.18} color="#fff2dd" />
       <directionalLight
-        position={[8, 16, 9]}
-        intensity={1.35}
-        color="#fff1dc"
+        position={[7, 15, 9]}
+        intensity={1.5}
+        color="#ffeccf"
         castShadow
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}
@@ -74,58 +82,58 @@ export function Hall({ total }: HallProps) {
         shadow-camera-top={14}
         shadow-camera-bottom={-14}
       />
-      <directionalLight position={[-6, 8, -4]} intensity={0.18} color="#dce7f2" />
+      <directionalLight position={[-6, 8, -4]} intensity={0.2} color="#eae4f0" />
 
-      {/* ---- Floor (polished, reflective) ---- */}
+      {/* ---- Floor (polished travertine, reflective) ---- */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, floorCenter]} receiveShadow>
         <planeGeometry args={[ROOM_WIDTH, floorLen]} />
-        <ConcreteMaterial
-          maps={maps}
-          repeat={[ROOM_WIDTH / TILE_M, floorLen / TILE_M]}
+        <PBRMaterial
+          maps={travertine}
+          repeat={[ROOM_WIDTH / FLOOR_TILE_M, floorLen / FLOOR_TILE_M]}
           color={FLOOR_TINT}
-          roughness={0.42}
+          roughness={0.32}
           metalness={0.0}
-          envMapIntensity={1.25}
-          normalScale={0.5}
+          envMapIntensity={1.4}
+          normalScale={0.4}
         />
       </mesh>
 
       {/* ---- Ceiling ---- */}
       <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, ROOM_HEIGHT, wallCenter]}>
         <planeGeometry args={[ROOM_WIDTH, wallLen]} />
-        <ConcreteMaterial
-          maps={maps}
-          repeat={[ROOM_WIDTH / TILE_M, wallLen / TILE_M]}
+        <PBRMaterial
+          maps={plaster}
+          repeat={[ROOM_WIDTH / WALL_TILE_M, wallLen / WALL_TILE_M]}
           color={CEIL_TINT}
           side={DoubleSide}
-          normalScale={0.8}
+          normalScale={0.5}
         />
       </mesh>
 
       {/* ---- Side walls ---- */}
       <mesh rotation={[0, Math.PI / 2, 0]} position={[-ROOM_HALF_WIDTH, ROOM_HEIGHT / 2, wallCenter]} receiveShadow>
         <planeGeometry args={[wallLen, ROOM_HEIGHT]} />
-        <ConcreteMaterial maps={maps} repeat={[wallLen / TILE_M, ROOM_HEIGHT / TILE_M]} color={WALL_TINT} side={DoubleSide} />
+        <PBRMaterial maps={plaster} repeat={[wallLen / WALL_TILE_M, ROOM_HEIGHT / WALL_TILE_M]} color={WALL_TINT} side={DoubleSide} normalScale={0.6} />
       </mesh>
       <mesh rotation={[0, -Math.PI / 2, 0]} position={[ROOM_HALF_WIDTH, ROOM_HEIGHT / 2, wallCenter]} receiveShadow>
         <planeGeometry args={[wallLen, ROOM_HEIGHT]} />
-        <ConcreteMaterial maps={maps} repeat={[wallLen / TILE_M, ROOM_HEIGHT / TILE_M]} color={WALL_TINT} side={DoubleSide} />
+        <PBRMaterial maps={plaster} repeat={[wallLen / WALL_TILE_M, ROOM_HEIGHT / WALL_TILE_M]} color={WALL_TINT} side={DoubleSide} normalScale={0.6} />
       </mesh>
 
       {/* ---- Far (back) wall ---- */}
       <mesh position={[0, ROOM_HEIGHT / 2, back]} receiveShadow>
         <planeGeometry args={[ROOM_WIDTH, ROOM_HEIGHT]} />
-        <ConcreteMaterial maps={maps} repeat={[ROOM_WIDTH / TILE_M, ROOM_HEIGHT / TILE_M]} color={WALL_TINT} side={DoubleSide} />
+        <PBRMaterial maps={plaster} repeat={[ROOM_WIDTH / WALL_TILE_M, ROOM_HEIGHT / WALL_TILE_M]} color={WALL_TINT} side={DoubleSide} normalScale={0.6} />
       </mesh>
 
       {/* ---- Entrance wall with a doorway ---- */}
-      <Doorway maps={maps} />
+      <Doorway maps={plaster} />
     </group>
   );
 }
 
-interface ConcreteMaterialProps {
-  maps: ConcreteMaps;
+interface PBRMaterialProps {
+  maps: PBRMaps;
   repeat: [number, number];
   color?: string;
   side?: typeof DoubleSide | undefined;
@@ -135,8 +143,8 @@ interface ConcreteMaterialProps {
   envMapIntensity?: number;
 }
 
-/** Clones the shared concrete maps and applies per-surface tiling. */
-function ConcreteMaterial({
+/** Clones shared PBR maps and applies per-surface tiling. */
+function PBRMaterial({
   maps,
   repeat,
   color = '#ffffff',
@@ -145,7 +153,7 @@ function ConcreteMaterial({
   metalness = 0,
   normalScale = 1,
   envMapIntensity = 1,
-}: ConcreteMaterialProps) {
+}: PBRMaterialProps) {
   const cloned = useMemo(() => {
     const tile = (t: Texture, srgb = false) => {
       const c = t.clone();
@@ -181,7 +189,7 @@ function ConcreteMaterial({
 }
 
 /** Front wall built from three slabs that frame a central opening. */
-function Doorway({ maps }: { maps: ConcreteMaps }) {
+function Doorway({ maps }: { maps: PBRMaps }) {
   const opening = { halfW: 1.8, height: 3.8 };
   const lintelH = ROOM_HEIGHT - opening.height;
   const slabW = ROOM_HALF_WIDTH - opening.halfW;
@@ -190,15 +198,15 @@ function Doorway({ maps }: { maps: ConcreteMaps }) {
     <group position={[0, 0, HALL_FRONT_Z]}>
       <mesh position={[-(ROOM_HALF_WIDTH + opening.halfW) / 2, ROOM_HEIGHT / 2, 0]} castShadow receiveShadow>
         <boxGeometry args={[slabW, ROOM_HEIGHT, 0.4]} />
-        <ConcreteMaterial maps={maps} repeat={[slabW / TILE_M, ROOM_HEIGHT / TILE_M]} color={WALL_TINT} />
+        <PBRMaterial maps={maps} repeat={[slabW / WALL_TILE_M, ROOM_HEIGHT / WALL_TILE_M]} color={WALL_TINT} />
       </mesh>
       <mesh position={[(ROOM_HALF_WIDTH + opening.halfW) / 2, ROOM_HEIGHT / 2, 0]} castShadow receiveShadow>
         <boxGeometry args={[slabW, ROOM_HEIGHT, 0.4]} />
-        <ConcreteMaterial maps={maps} repeat={[slabW / TILE_M, ROOM_HEIGHT / TILE_M]} color={WALL_TINT} />
+        <PBRMaterial maps={maps} repeat={[slabW / WALL_TILE_M, ROOM_HEIGHT / WALL_TILE_M]} color={WALL_TINT} />
       </mesh>
       <mesh position={[0, opening.height + lintelH / 2, 0]} castShadow receiveShadow>
         <boxGeometry args={[opening.halfW * 2, lintelH, 0.4]} />
-        <ConcreteMaterial maps={maps} repeat={[(opening.halfW * 2) / TILE_M, lintelH / TILE_M]} color={WALL_TINT} />
+        <PBRMaterial maps={maps} repeat={[(opening.halfW * 2) / WALL_TILE_M, lintelH / WALL_TILE_M]} color={WALL_TINT} />
       </mesh>
     </group>
   );

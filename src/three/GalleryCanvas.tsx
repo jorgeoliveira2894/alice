@@ -40,14 +40,14 @@ export function GalleryCanvas({ artworks, progress }: GalleryCanvasProps) {
         gl.outputColorSpace = SRGBColorSpace;
       }}
     >
-      {/* Warm interior air; the far end of the hall softens but stays readable */}
-      <color attach="background" args={['#e7e1d6']} />
-      <fog attach="fog" args={['#e7e1d6', 26, 105]} />
+      {/* Bright, warm Mediterranean air; only a touch of haze far down the hall */}
+      <color attach="background" args={['#efe9dc']} />
+      <fog attach="fog" args={['#efe9dc', 40, 140]} />
 
       <Suspense fallback={null}>
-        {/* Real HDRI image-based lighting (CC0 · Poly Haven) for realistic
+        {/* Warm HDRI image-based lighting (CC0 · Poly Haven) for realistic
             ambient light and reflections on the floor and framed works. */}
-        <Environment files="/hdri/studio_1k.hdr" environmentIntensity={0.55} />
+        <Environment files="/hdri/studio_warm_1k.hdr" environmentIntensity={0.85} />
 
         <Hall total={artworks.length} />
         {artworks.map((artwork, i) => (

@@ -5,9 +5,17 @@ attribution required. Credited here as a courtesy.
 
 | Asset | File | Source | License |
 |-------|------|--------|---------|
-| Concrete PBR (colour / normal / roughness) | `textures/concrete/*.jpg` | ambientCG — *Concrete034* | CC0 |
-| Studio HDRI (image-based lighting) | `hdri/studio_1k.hdr` | Poly Haven — *photo_studio_01* | CC0 |
+| Lime-plaster PBR (walls/ceiling) | `textures/plaster/*.jpg` | ambientCG — *Plaster003* | CC0 |
+| Travertine PBR (floor) | `textures/travertine/*.jpg` | ambientCG — *Travertine006* | CC0 |
+| Warm studio HDRI (image-based lighting) | `hdri/studio_warm_1k.hdr` | Poly Haven — *brown_photostudio_02* | CC0 |
 
-To swap the concrete: replace the three JPGs in `textures/concrete/` (keep the
-filenames). To change the lighting mood: replace `hdri/studio_1k.hdr` with any
-other `.hdr` and update the path in `src/three/GalleryCanvas.tsx`.
+To swap a material: replace the JPGs in the relevant `textures/<name>/` folder
+(keep the filenames). To change the lighting mood: replace the `.hdr` and update
+the path in `src/three/GalleryCanvas.tsx`.
+
+## Intro photography (not yet bundled)
+
+The opening sequence is designed to use two photographs (exterior facade →
+corridor through the doorway). Drop them in `intro/` as `01.jpg` and `02.jpg`.
+⚠️ Only use photos you own or have a licence for — the reference images shared in
+chat appear to be professional architecture photography and are **not** CC0.
