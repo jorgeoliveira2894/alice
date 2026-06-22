@@ -1,5 +1,5 @@
 import type { Artwork } from './types/artwork';
-import { ImmersiveEntrance } from './components/ImmersiveEntrance';
+import { AppleStyleGalleryExperience } from './components/AppleStyleGalleryExperience';
 import { ArtworkMoment } from './components/ArtworkMoment';
 import { ContactSection } from './components/ContactSection';
 
@@ -18,7 +18,7 @@ export default function ImmersiveExperience({ artworks }: ImmersiveExperiencePro
 
   return (
     <main className="bg-canvas text-ink">
-      <ImmersiveEntrance artwork={first} total={artworks.length} />
+      <AppleStyleGalleryExperience artwork={first} total={artworks.length} />
 
       {rest.map((artwork, i) => (
         <ArtworkMoment

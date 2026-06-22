@@ -13,15 +13,15 @@ export const artworks: Artwork[] = [
   {
     id: 'silent-form',
     title: 'Silent Form',
-    year: 2024,
+    year: 2025,
     image: '/artworks/silent-form.svg',
-    technique: 'Oil and graphite on linen',
+    technique: 'Mixed media on canvas',
     dimensions: '120 × 90 cm',
     description:
       'A study in stillness — where presence is suggested rather than stated, and the eye is left to complete the gesture.',
-    price: '€ 2 800',
+    price: 'On request',
     available: true,
-    emailSubject: 'Inquiry about Silent Form',
+    emailSubject: 'Artwork request — Silent Form',
   },
   {
     id: 'body-of-light',
