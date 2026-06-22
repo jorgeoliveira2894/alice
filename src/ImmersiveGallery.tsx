@@ -2,9 +2,10 @@ import { useScroll } from 'framer-motion';
 import { artworks } from './data/artworks';
 import { GalleryCanvas } from './three/GalleryCanvas';
 import { GalleryOverlay } from './components/GalleryOverlay';
+import { IntroPhotos } from './components/IntroPhotos';
 
 /** Total scroll length of the immersive walk, in viewport heights. */
-const scrollHeightVh = 240 + artworks.length * 170;
+const scrollHeightVh = 320 + artworks.length * 170;
 
 /**
  * The desktop experience: a fixed WebGL hall behind a crisp HTML overlay, both
@@ -19,6 +20,9 @@ export default function ImmersiveGallery() {
       <div className="fixed inset-0 z-0">
         <GalleryCanvas artworks={artworks} progress={scrollYProgress} />
       </div>
+
+      {/* Photographic opening that dissolves into the 3D hall */}
+      <IntroPhotos progress={scrollYProgress} />
 
       <GalleryOverlay artworks={artworks} progress={scrollYProgress} />
 

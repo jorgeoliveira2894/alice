@@ -40,8 +40,8 @@ export function GalleryOverlay({ artworks, progress }: GalleryOverlayProps) {
 }
 
 function Intro({ progress }: { progress: MotionValue<number> }) {
-  const opacity = useTransform(progress, [0, 0.05], [1, 0]);
-  const y = useTransform(progress, [0, 0.05], ['0%', '-30%']);
+  const opacity = useTransform(progress, [0, 0.05, 0.075], [1, 1, 0]);
+  const y = useTransform(progress, [0, 0.075], ['0%', '-28%']);
   const hint = useTransform(progress, [0, 0.04], [1, 0]);
 
   return (
@@ -50,13 +50,22 @@ function Intro({ progress }: { progress: MotionValue<number> }) {
         style={{ opacity, y }}
         className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center"
       >
-        <h1 className="font-serif text-5xl font-light leading-none tracking-tight text-ink md:text-7xl">
+        {/* soft scrim so the name stays legible over the opening photo */}
+        <div
+          aria-hidden
+          className="absolute left-1/2 top-1/2 h-[60vh] w-[90vw] max-w-3xl -translate-x-1/2 -translate-y-1/2"
+          style={{
+            background:
+              'radial-gradient(ellipse at center, rgba(247,245,241,0.55) 0%, rgba(247,245,241,0) 65%)',
+          }}
+        />
+        <h1 className="relative font-serif text-5xl font-light leading-none tracking-tight text-ink md:text-7xl">
           Alice Moura Neves
           <span className="mt-2 block text-2xl tracking-editorial text-muted md:text-3xl">
             STUDIO
           </span>
         </h1>
-        <p className="mt-8 text-xs uppercase tracking-editorial text-muted md:text-sm">
+        <p className="relative mt-8 text-xs uppercase tracking-editorial text-muted md:text-sm">
           Original artworks and visual explorations
         </p>
       </motion.div>
