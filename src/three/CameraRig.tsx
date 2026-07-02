@@ -39,8 +39,8 @@ export function CameraRig({ total, progress }: CameraRigProps) {
     const { index, weight } = activeTurn(total, p);
     const art = placements.current[index];
 
-    // Step slightly toward the centre/opposite side for a better viewing angle.
-    const xOffset = lerp(0, -art.side * 1.1, weight);
+    // Step toward the artwork while dwelling — the "zoom" of the visit.
+    const xOffset = lerp(0, art.side * 1.6, weight);
     desiredPos.current.set(xOffset, EYE_HEIGHT, z);
 
     // Blend between looking down the hall and facing the active artwork.

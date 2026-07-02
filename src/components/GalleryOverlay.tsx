@@ -31,6 +31,7 @@ export function GalleryOverlay({ artworks, progress }: GalleryOverlayProps) {
       <DwellVignette total={artworks.length} progress={progress} />
 
       <Intro progress={progress} />
+      <ThresholdStatement progress={progress} />
 
       {artworks.map((artwork, i) => (
         <ArtworkPanel
@@ -73,12 +74,13 @@ function DwellVignette({
 }
 
 function Intro({ progress }: { progress: MotionValue<number> }) {
-  // Hero exit à la Apple: the title drifts up, scales slightly toward the
-  // viewer and dissolves into blur as the camera starts moving.
-  const opacity = useTransform(progress, [0, 0.05], [1, 0]);
-  const y = useTransform(progress, [0, 0.05], [0, -70]);
-  const scale = useTransform(progress, [0, 0.05], [1, 1.06]);
-  const blurPx = useTransform(progress, [0, 0.05], [0, 10]);
+  // Hero à la reference video: display-scale typography laid over the stone
+  // portal. On scroll it drifts up, scales toward the viewer and dissolves
+  // into blur as the camera starts moving through the door.
+  const opacity = useTransform(progress, [0, 0.045], [1, 0]);
+  const y = useTransform(progress, [0, 0.045], [0, -80]);
+  const scale = useTransform(progress, [0, 0.045], [1, 1.08]);
+  const blurPx = useTransform(progress, [0, 0.045], [0, 12]);
   const filter = useMotionTemplate`blur(${blurPx}px)`;
   const hint = useTransform(progress, [0, 0.03], [1, 0]);
 
@@ -88,13 +90,17 @@ function Intro({ progress }: { progress: MotionValue<number> }) {
         style={{ opacity, y, scale, filter }}
         className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center"
       >
-        <h1 className="font-serif text-5xl font-light leading-none tracking-tight text-ink md:text-7xl">
-          Alice Moura Neves
-          <span className="mt-2 block text-2xl tracking-editorial text-muted md:text-3xl">
-            STUDIO
-          </span>
+        <h1
+          className="font-serif font-light tracking-tight text-ink"
+          style={{ fontSize: 'clamp(3.5rem, 9.5vw, 10.5rem)', lineHeight: 0.95 }}
+        >
+          Alice
+          <span className="block">Moura Neves</span>
         </h1>
-        <p className="mt-8 text-xs uppercase tracking-editorial text-muted md:text-sm">
+        <p className="mt-6 text-sm uppercase tracking-editorial text-muted md:text-base">
+          Studio
+        </p>
+        <p className="mt-10 text-xs uppercase tracking-editorial text-muted md:text-sm">
           Original artworks and visual explorations
         </p>
       </motion.div>
@@ -106,6 +112,28 @@ function Intro({ progress }: { progress: MotionValue<number> }) {
         <span className="block animate-pulse">Scroll to enter</span>
       </motion.div>
     </>
+  );
+}
+
+/**
+ * A single editorial line that floats past while the camera crosses the stone
+ * threshold — the big-type scroll moment from the reference video.
+ */
+function ThresholdStatement({ progress }: { progress: MotionValue<number> }) {
+  const opacity = useTransform(progress, [0.05, 0.075, 0.105, 0.135], [0, 1, 1, 0]);
+  const y = useTransform(progress, [0.05, 0.135], [60, -60]);
+  const blurPx = useTransform(progress, [0.05, 0.068, 0.115, 0.135], [8, 0, 0, 8]);
+  const filter = useMotionTemplate`blur(${blurPx}px)`;
+
+  return (
+    <motion.div
+      style={{ opacity, y, filter }}
+      className="absolute inset-0 flex items-center justify-center px-6 text-center"
+    >
+      <p className="max-w-3xl font-serif text-3xl font-light italic leading-snug text-ink/80 md:text-5xl">
+        A quiet walk through original works
+      </p>
+    </motion.div>
   );
 }
 

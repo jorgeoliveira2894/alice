@@ -6,19 +6,20 @@ import {
   ROOM_HEIGHT,
   hallBackZ,
 } from './layout';
+import { StoneDoor } from './StoneDoor';
 
 interface HallProps {
   total: number;
 }
 
-const CONCRETE = '#e7e4de'; // burnt white microcement
-const CONCRETE_FLOOR = '#e2dfd8';
+const CONCRETE = '#f1efe9'; // all-white gallery walls
+const CONCRETE_FLOOR = '#e9e6df';
 const ROOM_WIDTH = ROOM_HALF_WIDTH * 2;
 
 /**
- * The architecture: a long, tall corridor in burnt-white microcement, entered
- * through a doorway in the front wall and closed by a far wall. Lit softly from
- * above to read as a large contemporary gallery.
+ * The architecture: a long, tall, all-white gallery hall, entered through a
+ * monumental stone portal and closed by a far wall. Lit softly from above to
+ * read as a large contemporary gallery.
  */
 export function Hall({ total }: HallProps) {
   const back = hallBackZ(total);
@@ -31,8 +32,8 @@ export function Hall({ total }: HallProps) {
   return (
     <group>
       {/* ---- Lighting ---- */}
-      <ambientLight intensity={0.45} />
-      <hemisphereLight args={['#ffffff', '#d6d2ca', 0.7]} />
+      <ambientLight intensity={0.85} />
+      <hemisphereLight args={['#ffffff', '#e8e4dc', 1.0]} />
       <directionalLight
         position={[6, 14, 10]}
         intensity={1.1}
@@ -90,50 +91,8 @@ export function Hall({ total }: HallProps) {
         <meshStandardMaterial color={CONCRETE} roughness={1} side={DoubleSide} />
       </mesh>
 
-      {/* ---- Entrance wall with a doorway ---- */}
-      <Doorway />
-    </group>
-  );
-}
-
-/** Front wall built from three slabs that frame a central opening. */
-function Doorway() {
-  const opening = { halfW: 1.8, height: 3.8 };
-  const lintelH = ROOM_HEIGHT - opening.height;
-
-  return (
-    <group position={[0, 0, HALL_FRONT_Z]}>
-      {/* Left slab */}
-      <mesh
-        position={[-(ROOM_HALF_WIDTH + opening.halfW) / 2, ROOM_HEIGHT / 2, 0]}
-        castShadow
-        receiveShadow
-      >
-        <boxGeometry
-          args={[ROOM_HALF_WIDTH - opening.halfW, ROOM_HEIGHT, 0.4]}
-        />
-        <meshStandardMaterial color={CONCRETE} roughness={1} />
-      </mesh>
-      {/* Right slab */}
-      <mesh
-        position={[(ROOM_HALF_WIDTH + opening.halfW) / 2, ROOM_HEIGHT / 2, 0]}
-        castShadow
-        receiveShadow
-      >
-        <boxGeometry
-          args={[ROOM_HALF_WIDTH - opening.halfW, ROOM_HEIGHT, 0.4]}
-        />
-        <meshStandardMaterial color={CONCRETE} roughness={1} />
-      </mesh>
-      {/* Lintel above the opening */}
-      <mesh
-        position={[0, opening.height + lintelH / 2, 0]}
-        castShadow
-        receiveShadow
-      >
-        <boxGeometry args={[opening.halfW * 2, lintelH, 0.4]} />
-        <meshStandardMaterial color={CONCRETE} roughness={1} />
-      </mesh>
+      {/* ---- Monumental stone portal at the entrance ---- */}
+      <StoneDoor />
     </group>
   );
 }

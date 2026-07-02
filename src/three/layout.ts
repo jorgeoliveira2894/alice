@@ -17,8 +17,11 @@ export const EYE_HEIGHT = 1.7;
 export const ART_HEIGHT = 2.4; // default artwork height in world units
 export const ART_CENTER_Y = 2.3;
 
-export const CAMERA_START_Z = 11; // outside the doorway, looking in
+export const CAMERA_START_Z = 13; // outside the doorway, looking in
 export const HALL_FRONT_Z = 4; // entrance wall (with doorway) sits here
+
+/** The monumental stone portal at the entrance. */
+export const DOOR = { halfWidth: 2.0, height: 4.8, jambWidth: 1.4, depth: 1.2 };
 
 /** Walk choreography: artworks live between these scroll positions. */
 const WALK_START = 0.09;

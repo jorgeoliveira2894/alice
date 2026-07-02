@@ -28,13 +28,13 @@ export function GalleryCanvas({ artworks, progress }: GalleryCanvasProps) {
       camera={{ position: [0, EYE_HEIGHT, CAMERA_START_Z], fov: 60, near: 0.1, far: 200 }}
       onCreated={({ gl }) => {
         gl.toneMapping = ACESFilmicToneMapping;
-        gl.toneMappingExposure = 1.05;
+        gl.toneMappingExposure = 1.18;
         gl.outputColorSpace = SRGBColorSpace;
       }}
     >
       {/* Soft atmospheric haze so the far end of the hall dissolves */}
-      <color attach="background" args={['#efece6']} />
-      <fog attach="fog" args={['#efece6', 18, 70]} />
+      <color attach="background" args={['#f3f1ec']} />
+      <fog attach="fog" args={['#f3f1ec', 18, 70]} />
 
       <Suspense fallback={null}>
         <Hall total={artworks.length} />
