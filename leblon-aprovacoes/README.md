@@ -21,9 +21,7 @@ Sem configuração, a app corre em modo demonstração com um plano de exemplo. 
 2. Em **SQL Editor**, cole e corra `supabase/schema.sql`. Cria as tabelas, as regras de acesso e o espaço para os ficheiros.
 3. Em **Authentication > Users > Add user**, crie o utilizador da agência (email e palavra-passe). Em **Authentication > Sign In / Providers**, desative "Allow new users to sign up" para ninguém mais criar conta.
 4. Copie `.env.example` para `.env` e preencha com os valores de **Project Settings > API** (`Project URL` e `anon public key`).
-5. Publique na [Vercel](https://vercel.com) e adicione as duas variáveis `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`. Há duas formas:
-   - **Projeto com vários serviços** (o `vercel.json` na raiz do repositório): a galeria fica em `/` e este portal em `/aprovacoes`. Importe o repositório sem mudar o *Root Directory*.
-   - **Projeto só para o portal**: escolha `leblon-aprovacoes` como *Root Directory*; o `vercel.json` desta pasta trata das rotas e a app fica na raiz do domínio.
+5. Publique na [Vercel](https://vercel.com) como projeto próprio: importe o repositório, escolha `leblon-aprovacoes` como *Root Directory* e adicione as duas variáveis `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`. O `vercel.json` desta pasta trata das rotas.
 
    Para publicar num subcaminho noutro alojamento, compile com `BASE_PATH=/subcaminho/ npm run build`.
 
