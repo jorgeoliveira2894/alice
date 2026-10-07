@@ -135,7 +135,7 @@ export default function PlanEditor() {
             {HASH_ROUTER ? (
               <Link to={`/c/${plan.share_token}`} className="btn-ghost-dark w-full">Ver como o cliente</Link>
             ) : (
-              <a href={`/c/${plan.share_token}`} target="_blank" rel="noreferrer" className="btn-ghost-dark w-full">Ver como o cliente</a>
+              <a href={shareUrl(plan.share_token)} target="_blank" rel="noreferrer" className="btn-ghost-dark w-full">Ver como o cliente</a>
             )}
           </div>
 

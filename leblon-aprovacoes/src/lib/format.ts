@@ -47,9 +47,12 @@ export function progress(bundle: PlanBundle) {
 /** Build para alojamento sem reescrita de rotas (ex.: pré-visualização estática). */
 export const HASH_ROUTER = import.meta.env.VITE_HASH_ROUTER === '1';
 
+/** Subcaminho onde a app está publicada, sem barra final ('' na raiz). */
+export const BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 export function shareUrl(token: string): string {
   if (HASH_ROUTER) return `${window.location.origin}${window.location.pathname}#/c/${token}`;
-  return `${window.location.origin}/c/${token}`;
+  return `${window.location.origin}${BASE_PATH}/c/${token}`;
 }
 
 export function newId(): string {
