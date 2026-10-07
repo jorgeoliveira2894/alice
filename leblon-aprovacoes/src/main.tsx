@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
+import { HASH_ROUTER } from './lib/format';
+
+const Router = HASH_ROUTER ? HashRouter : BrowserRouter;
 import './index.css';
 import AdminLayout from './pages/AdminLayout';
 import ClientView from './pages/ClientView';
@@ -10,7 +13,7 @@ import PlanEditor from './pages/PlanEditor';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <Router>
       <Routes>
         <Route path="/c/:token" element={<ClientView />} />
         <Route path="/entrar" element={<Login />} />
@@ -19,6 +22,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <Route path="/plano/:id" element={<PlanEditor />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </Router>
   </React.StrictMode>,
 );

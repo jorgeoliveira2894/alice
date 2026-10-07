@@ -1,9 +1,11 @@
-import { useEffect, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
+import markCream from '../assets/leblon-mark-cream.png';
+import markInk from '../assets/leblon-mark-ink.png';
 import type { PostKind, Status } from '../lib/types';
 import { KIND_LABEL, STATUS_LABEL } from '../lib/format';
 
 export function Logo({ tone = 'ink', className = '' }: { tone?: 'ink' | 'cream'; className?: string }) {
-  return <img src={`/leblon-mark-${tone}.png`} alt="LEBLON" className={`h-auto select-none ${className}`} draggable={false} />;
+  return <img src={tone === 'cream' ? markCream : markInk} alt="LEBLON" className={`h-auto select-none ${className}`} draggable={false} />;
 }
 
 export function StatusBadge({ status, compact = false }: { status: Status; compact?: boolean }) {
@@ -116,5 +118,20 @@ export function DemoBanner() {
     <div className="bg-ink px-4 py-2 text-center text-[10px] uppercase tracking-label text-cream/70">
       Modo demonstração · os dados ficam só neste browser · liga o Supabase para enviar links reais
     </div>
+  );
+}
+
+/** Botão de ação destrutiva em dois toques (sem diálogos do browser). */
+export function ConfirmButton({ label, confirmLabel = 'Confirmar?', onConfirm, className = '' }: { label: string; confirmLabel?: string; onConfirm: () => Promise<void> | void; className?: string }) {
+  const [armed, setArmed] = useState(false);
+  useEffect(() => {
+    if (!armed) return;
+    const t = setTimeout(() => setArmed(false), 4000);
+    return () => clearTimeout(t);
+  }, [armed]);
+  return (
+    <button type="button" className={className} onClick={() => (armed ? onConfirm() : setArmed(true))}>
+      {armed ? confirmLabel : label}
+    </button>
   );
 }

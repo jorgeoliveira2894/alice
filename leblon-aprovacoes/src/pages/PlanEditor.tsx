@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { api } from '../lib/api';
 import type { Media, Plan, PlanBundle, Post, PostKind, Story, StoryFrame } from '../lib/types';
-import { KIND_LABEL, monthLabel, newId, progress, scheduleLabel, shareUrl } from '../lib/format';
-import { KindIcon, Modal, Spinner, StatusBadge } from '../components/ui';
+import { HASH_ROUTER, KIND_LABEL, monthLabel, newId, progress, scheduleLabel, shareUrl } from '../lib/format';
+import { ConfirmButton, KindIcon, Modal, Spinner, StatusBadge } from '../components/ui';
 import { byWeek, FeedGrid, StoryFrames, Thumb } from '../components/content';
 import { Field } from './Dashboard';
 
@@ -132,7 +132,11 @@ export default function PlanEditor() {
             <p className="label text-cream/50">Link para o cliente</p>
             <p className="text-sm leading-relaxed text-cream/80">Envie este link ao cliente. Não precisa de conta: vê o mês, aprova ou pede alterações.</p>
             <CopyLink token={plan.share_token} dark />
-            <a href={`/c/${plan.share_token}`} target="_blank" rel="noreferrer" className="btn-ghost-dark w-full">Ver como o cliente</a>
+            {HASH_ROUTER ? (
+              <Link to={`/c/${plan.share_token}`} className="btn-ghost-dark w-full">Ver como o cliente</Link>
+            ) : (
+              <a href={`/c/${plan.share_token}`} target="_blank" rel="noreferrer" className="btn-ghost-dark w-full">Ver como o cliente</a>
+            )}
           </div>
 
           <div className="space-y-3 border border-line p-6">
@@ -154,16 +158,15 @@ export default function PlanEditor() {
             </div>
           )}
 
-          <button
+          <ConfirmButton
             className="label text-stone transition hover:text-clay"
-            onClick={async () => {
-              if (!confirm(`Apagar o plano de ${monthLabel(plan.month)} de ${plan.client_name}? Esta ação não se pode desfazer.`)) return;
+            label="Apagar plano"
+            confirmLabel="Toque de novo para apagar o plano"
+            onConfirm={async () => {
               await api.deletePlan(plan.id);
               nav('/');
             }}
-          >
-            Apagar plano
-          </button>
+          />
         </aside>
       </div>
 
@@ -390,16 +393,14 @@ function PostEditor({
               <>
                 <button className="btn-line px-3" onClick={() => onMove(-1)} disabled={index === 0} title="Mover para trás no feed">←</button>
                 <button className="btn-line px-3" onClick={() => onMove(1)} disabled={index === total - 1} title="Mover para a frente no feed">→</button>
-                <button
+                <ConfirmButton
                   className="btn border-transparent px-3 text-clay hover:border-clay"
-                  onClick={async () => {
-                    if (!confirm('Apagar esta publicação?')) return;
+                  label="Apagar"
+                  onConfirm={async () => {
                     await api.deletePost(post.id);
                     onSaved();
                   }}
-                >
-                  Apagar
-                </button>
+                />
               </>
             )}
           </div>
@@ -469,16 +470,14 @@ function StoryEditor({ story, onClose, onSaved }: { story: Story; onClose: () =>
 
         <div className="flex gap-2">
           <button className="btn-ink flex-1" onClick={save} disabled={busy}>{busy ? 'A guardar…' : 'Guardar'}</button>
-          <button
+          <ConfirmButton
             className="btn border-transparent px-3 text-clay hover:border-clay"
-            onClick={async () => {
-              if (!confirm('Apagar esta sequência?')) return;
+            label="Apagar"
+            onConfirm={async () => {
               await api.deleteStory(story.id);
               onSaved();
             }}
-          >
-            Apagar
-          </button>
+          />
         </div>
       </div>
     </Modal>

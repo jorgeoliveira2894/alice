@@ -44,7 +44,11 @@ export function progress(bundle: PlanBundle) {
   return { total, approved, changes, pending: total - approved - changes };
 }
 
+/** Build para alojamento sem reescrita de rotas (ex.: pré-visualização estática). */
+export const HASH_ROUTER = import.meta.env.VITE_HASH_ROUTER === '1';
+
 export function shareUrl(token: string): string {
+  if (HASH_ROUTER) return `${window.location.origin}${window.location.pathname}#/c/${token}`;
   return `${window.location.origin}/c/${token}`;
 }
 
