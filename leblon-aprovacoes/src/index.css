@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    @apply bg-cream font-sans text-ink;
+    font-weight: 400;
+  }
+  ::selection {
+    @apply bg-ink text-cream;
+  }
+}
+
+@layer components {
+  .label {
+    @apply text-[10px] font-medium uppercase tracking-label text-stone;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 border px-5 py-3 text-[11px] font-medium uppercase tracking-label transition-colors duration-300 ease-soft disabled:cursor-not-allowed disabled:opacity-40;
+  }
+  .btn-ink {
+    @apply btn border-ink bg-ink text-cream hover:bg-smoke;
+  }
+  .btn-line {
+    @apply btn border-ink/80 bg-transparent text-ink hover:bg-ink hover:text-cream;
+  }
+  .btn-ghost-dark {
+    @apply btn border-cream/30 bg-transparent text-cream hover:border-cream hover:bg-cream hover:text-ink;
+  }
+  .input {
+    @apply w-full border border-line bg-cream px-3 py-2.5 text-sm text-ink outline-none transition-colors placeholder:text-stone/70 focus:border-ink;
+  }
+}
